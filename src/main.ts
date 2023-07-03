@@ -14,6 +14,8 @@ import {
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { LightProbeGenerator } from 'three/addons/lights/LightProbeGenerator.js'
 
+const baseURL = import.meta.env.BASE_URL
+
 async function buildThree() {
   const renderer = new WebGLRenderer()
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -25,7 +27,7 @@ async function buildThree() {
   camera.position.set(0, 0, -50.0)
   const controls = new OrbitControls(camera, renderer.domElement)
   
-  const texture = await new TextureLoader().loadAsync('/environment.jpg')
+  const texture = await new TextureLoader().loadAsync(`${baseURL}/environment.jpg`)
   texture.colorSpace = SRGBColorSpace
   const cube = new WebGLCubeRenderTarget(256).fromEquirectangularTexture(renderer, texture)
   const lightProbe = LightProbeGenerator.fromCubeRenderTarget(renderer, cube)
